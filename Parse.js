@@ -6,15 +6,15 @@ class Parse{
 	constructor(str){
 		this.str = str;
 	}
-	parseUrl() {
+	parseUrl() { //method for parsing URL
 		let Url = url.parse(this.str);
 		Url.protocol = this.cleanProtocol(Url.protocol);
 		return Url;
 	};
-	cleanProtocol(str){
+	cleanProtocol(str){ //method for cleaning protocol from whitespaces and :
 		return str.trim().toLowerCase().replace(/:$/, '');
 	};
-	setName(Url){  //setting name if user didn't enter the name of the file
+	setName(Url){  //method for setting name if user didn't enter the name of the file
 		let str =Url.pathname;
 		let s = str.lastIndexOf("/");
 		this.name = str.substr(s+1, str.length);

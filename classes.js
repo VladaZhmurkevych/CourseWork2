@@ -12,18 +12,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-app.post('/public', (req1, res1)=>{
+app.post('/public', (req, res)=>{ //creating method post which will work, when user click on download
 	try {
 		let outJson = new OutJ.OutJSON('docs.json', {});
 		let heap = outJson.getData();
-		const outFile = new Outf.OutputFile(req1.body.url, req1.body.name);
+		const outFile = new Outf.OutputFile(req.body.url, req.body.name);
 		const parse = new Prs.Parse(outFile.getUrl());
 		const D = new Downld.Download(parse.parseUrl(), outFile.getName(), parse, heap, outJson);
-		D.wget((flName, size) => {res1.json({name: flName, size: size, keys: outJson.showDownloaded()})});
+		D.wget((error,flName, size) => {
+			if(error){
+				return res.json({error:"Data can not be downloaded"})
+			}
+			else res.json({
+				name: flName, size: size})});
 	}
 	catch (e) {
-		res1.json({error: "You entered wrong information!"})
+		console.log(e);
+		res.json({error: "You entered wrong information!"})
 	}
+});
+app.post('/downloaded', (req, res)=>{ // creating method for getting file names to client
+	let outJson = new OutJ.OutJSON('docs.json');
+	let moon = outJson.getData();
+	res.json({keys: outJson.showDownloaded()});
+
 });
 
 app.listen(3000, function () {

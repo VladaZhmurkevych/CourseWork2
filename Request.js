@@ -5,8 +5,7 @@ const https = require('https');
 
 class Request{
 	constructor(){};
-	setProtocol(obj){
-		//method for setting protocol if it dosn't matched
+	setProtocol(obj){ //method for setting protocol if it dosn't matched
 		if (!obj.protocol) {
 			obj.protocol = 'http';
 		}
@@ -14,8 +13,7 @@ class Request{
 		obj.protocol = tmp.trim().toLowerCase().replace(/:$/, '');
 		return obj;
 	}
-	request(obj, callback){
-		//method for making a request
+	request(obj, callback){ //method for making a request
 		obj = this.setProtocol(obj);
 		if (obj.protocol === 'http') {
 			delete obj.protocol;

@@ -5,10 +5,10 @@ class OutputFile {
 		this.url = url;
 		this.name = name;
 	}
-	getUrl(){
+	getUrl(){ //method for getting url
 		return this.url;
 	};
-	getName(){
+	getName(){ //method for getting name
 		return this.name;
 	}
 }

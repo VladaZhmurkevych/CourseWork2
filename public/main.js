@@ -3,7 +3,6 @@ const download = document.getElementById('Start');
 download.addEventListener('click', (e) => {
 	e.preventDefault();
 	console.log(document.getElementById('url').value);
-	console.log('shit');
 	fetch('/public', {
 		method: 'POST',
 		headers: {"Content-Type": "application/json"},
@@ -18,17 +17,15 @@ download.addEventListener('click', (e) => {
 			alert(res.error)
 		}
 		else {
-			if(res.size !== undefined){
+			if(res.size !== undefined && res.size !== null){
 				let temp_date = new Date();
 				let day = temp_date.getDate();
 				let month = temp_date.getMonth() + 1;
 				let year = temp_date.getYear() - 100 + 2000;
 				document.getElementById('result').innerHTML = "\""+res.name+"\"" + " downloaded," +" size: "+ res.size+"Kb";
 				document.getElementById('timeDate').innerHTML = "date: " + day + "." + month + "." + year + "   time: " + temp_date.getHours() + ":" + temp_date.getMinutes() + ":" + temp_date.getSeconds()
-				for(let i = 0; i< res.keys.length; i++){
-					document.getElementById('result').innerHTML += "  "+res.keys[i];
-				}
-			
+
+
 			}
 			else{
 
@@ -40,8 +37,12 @@ download.addEventListener('click', (e) => {
 				document.getElementById('timeDate').innerHTML = "date: " + day + "." + month + "." + year + "   time: " + temp_date.getHours() + ":" + temp_date.getMinutes() + ":" + temp_date.getSeconds()
 			}
 		}
-		
+
 	})
+		.catch(e=>{
+			alert("Error")
+		})
+
 });
 
 
